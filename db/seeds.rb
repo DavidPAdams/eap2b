@@ -12,11 +12,13 @@
   title = Faker::Name.prefix
   phone = Faker::PhoneNumber.cell_phone
   email = Faker::Internet.safe_email(name: "#{firstName}#{x}")
-  name = "#{firstName} #{lastName}"
-  status = x%2=0 ? true : false
+  name = "#{lastName}, #{firstName}"
+  status = x%2 ? true : false
   User.create!(name: name,
                email: email,
                title: title,
                phone: phone,
-               status: status)
+               status: status,
+               created_at: Time.zone.now,
+               updated_at: Time.zone.now)
 end
