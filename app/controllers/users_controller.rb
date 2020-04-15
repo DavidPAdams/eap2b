@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  before_action :all_users, only: [:index, :create]
   before_action :set_user, only: [:edit, :update, :destroy]
-  respond_to :html, :js
 
   def index
+    @users = User.all
+    @user = User.new    
   end
 
   def new
@@ -12,7 +12,16 @@ class UsersController < ApplicationController
 
   def create
     @user = User.create(user_params)
-    flash[:success] = "A new user, #{@user.name}, was added to the list"
+
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to @user, notice: "#{@user.name} was added to the users list"}
+        format.js
+      else
+        format.html { render :new }
+      end
+    end
+
   end
 
   def edit
@@ -32,10 +41,6 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :title, :status)
-    end
-
-    def all_users
-      @users = User.all
     end
 
     def set_user
