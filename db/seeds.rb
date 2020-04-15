@@ -13,7 +13,7 @@
   phone = Faker::PhoneNumber.cell_phone
   email = Faker::Internet.safe_email(name: "#{firstName}#{x}")
   name = "#{lastName}, #{firstName}"
-  status = x%2 ? true : false
+  status = x%4>0 ? true : false
   User.create!(name: name,
                email: email,
                title: title,
