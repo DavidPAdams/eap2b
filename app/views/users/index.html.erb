@@ -1,5 +1,7 @@
 <h1>Users</h1>
-<%= link_to 'Add New User', new_user_path, remote: true %>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newUserModal">
+  Add New User
+</button>
 <table>
   <thead>
     <tr>
@@ -13,6 +15,7 @@
     </tr>
   </thead>
   <tbody>
+    
     <% @users.each do |user| %>
       <tr>
         <td><%= user.created_at %></td>
@@ -21,10 +24,57 @@
         <td><%= user.title %></td>
         <td><%= user.phone %></td>
         <td><%= user.status ? 'active' : 'inactive' %></td>
-        <td><%= link_to 'Edit', edit_user_path(user), remote: true %></td>
-        <td><%= link_to 'Delete', user, method: :delete, data: { confirm: 'Confirm delete' } %></td>
+        <td><%= link_to edit_user_path(user), remote: true do %>
+          <button class="btn btn-success btn-sm">Edit</button>
+        <% end %>  
+        </td>
+        <td><%= link_to user, remote: true, method: :delete, data: { confirm: 'Confirm delete' } do %>
+          <button class="btn btn-danger btn-sm">Delete</button>
+        <% end %>
+        </td>
       </tr>
     <% end %>
+    
   </tbody>
 </table>
+<%= will_paginate @users %>
 
+<div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="newUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add New User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <% provide(:button_text, 'Add User') %>
+        <%= render 'form', user: @user %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <% provide(:button_text, 'Edit User') %>
+        <%= render 'form', user: user %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
