@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all.latest_updated.paginate(page: params[:page])
-    @user = User.new    
+    @user = User.new 
   end
 
   def new
@@ -15,7 +15,6 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: "#{@user.name} was added to the users list"}
         format.js
       else
         format.html { render :new }
@@ -28,13 +27,21 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update_attributes(user_params)
+    respond_to do |format|
+      if @user.update_attributes(user_params)
+        format.js
+      else
+        format.html { render :edit }
+      end
+    end
+    
   end
 
-  def delete
+  def destroy
     gone_user = @user.name
-    @user.destroy
-    flash[:success] = "#{gone_user} was deleted from the list"
+    respond_to do |format|
+      @user.destroy ? format.js : format.html { render :index }
+    end
   end
 
   private
