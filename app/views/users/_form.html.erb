@@ -1,0 +1,21 @@
+<%= form_with(model: user, remote: true) do |form| %>
+  <%= render 'shared/error_messages', object: form.object %>
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :user_name, autofocus: true, class: "form-control" %>
+
+    <%= form.label :email %>
+    <%= form.email_field :email, id: :user_email, class: "form-control" %>
+
+    <%= form.label :title %>
+    <%= form.text_field :title, id: :user_title, class: "form-control" %>
+
+    <%= form.label :phone %>
+    <%= form.text_field :phone, id: :user_phone, class: "form-control" %>
+
+    <%= form.label :status %>
+    <%= form.select :status, [['inactive', 0], ['active', 1]], id: :user_status %>
+
+    <%= form.submit yield(:button_text), class: "form-control btn btn-primary" %>
+  </div>
+<% end %>
