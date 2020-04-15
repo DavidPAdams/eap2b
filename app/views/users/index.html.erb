@@ -23,10 +23,8 @@
         <td><%= user.email %></td>
         <td><%= user.title %></td>
         <td><%= user.phone %></td>
-        <td><%= user.status ? 'active' : 'inactive' %></td>
-        <td><%= link_to edit_user_path(user), remote: true do %>
-          <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#editUserModal">Edit</button>
-        <% end %>  
+        <td class="status_<%= user.status %>"><%= user.status ? 'active' : 'inactive' %></td>
+        <td><a href="#" class="btn btn-success btn-sm" data-toggle="modal" data-target="#editUserModal_<%= user.id %>">Edit</a> 
         </td>
         <td><%= link_to user, remote: true, method: :delete, data: { confirm: 'Confirm delete' } do %>
           <button class="btn btn-danger btn-sm">Delete</button>
