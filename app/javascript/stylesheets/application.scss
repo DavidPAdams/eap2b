@@ -1,2 +1,10 @@
 
 @import '~bootstrap/scss/bootstrap';
+
+td.status_false {
+  color: red;
+}
+
+td.status_true {
+  color: green;
+}
