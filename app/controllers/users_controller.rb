@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :set_users, only: [:index]
+  helper_method :sort_column, :sort_direction
 
   def index
-    @users = User.all.latest_updated.paginate(page: params[:page])
     @user = User.new 
   end
 
@@ -12,36 +13,20 @@ class UsersController < ApplicationController
 
   def create
     @user = User.create(user_params)
-
-    respond_to do |format|
-      if @user.save
-        format.js
-      else
-        format.html { render :new }
-      end
-    end
-
+    redirect_to root_url
   end
 
   def edit
   end
 
   def update
-    respond_to do |format|
-      if @user.update_attributes(user_params)
-        format.js
-      else
-        format.html { render :edit }
-      end
-    end
-    
+    @user.update_attributes(user_params)
+    redirect_to root_url
   end
 
   def destroy
-    gone_user = @user.name
-    respond_to do |format|
-      @user.destroy ? format.js : format.html { render :index }
-    end
+    @user.destroy
+    redirect_to root_url
   end
 
   private
@@ -52,6 +37,18 @@ class UsersController < ApplicationController
 
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def set_users
+      @users = User.order(sort_column + " " + sort_direction).paginate(page: params[:page])
+    end
+
+    def sort_column
+      User.column_names.include?(params[:sort]) ? params[:sort] : "updated_at"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
     end
 
 end
