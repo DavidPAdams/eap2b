@@ -20,7 +20,8 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update_attributes!(user_params)
+    @user.update(user_params)
+    set_users
     redirect_to root_url
   end
 
