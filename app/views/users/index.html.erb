@@ -2,8 +2,58 @@
 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#newUserModal">
   Add New User
 </button>
+<table class="table-striped">
+  <thead>
+    <tr>
+      <th><%= sortable "updated_at", "Last Updated" %></th>
+      <th><%= sortable "name" %></th>
+      <th><%= sortable "email" %></th>
+      <th><%= sortable "title" %></th>
+      <th><%= sortable "phone" %></th>
+      <th><%= sortable "status" %></th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
 
-<%= render @users %>
+  <tbody>
+    
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.updated_at.strftime("%d %b %Y - %H:%M") %></td>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.title %></td>
+        <td><%= user.phone %></td>
+        <td class="status_<%= user.status %>"><%= user.status ? 'active' : 'inactive' %></td>
+        <td><a href="#" class="btn btn-success btn-sm" data-toggle="modal" data-target="#editUserModal_<%= user.id %>">Edit</a> 
+        </td>
+        <td><%= link_to user, remote: true, method: :delete, data: { confirm: 'Confirm delete' } do %>
+          <button class="btn btn-danger btn-sm">Delete</button>
+        <% end %>
+        </td>
+      </tr>
+      <div class="modal fade" id="editUserModal_<%= user.id %>" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="newUserModalLabel">Edit User</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <%= render 'form', user: user %>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    
+  </tbody>
+</table>
 
 <%= will_paginate @users %>
 
@@ -17,7 +67,6 @@
         </button>
       </div>
       <div class="modal-body">
-        <% provide(:button_text, 'Add User') %>
         <%= render 'form', user: @user %>
       </div>
       <div class="modal-footer">
