@@ -2,13 +2,13 @@
   <%= render 'shared/error_messages', object: form.object %>
   <div class="form-group">
     <%= form.label :name %>
-    <%= form.text_field :name, id: :user_name, autofocus: true, class: "form-control" %>
+    <%= form.text_field :name, id: :user_name, autofocus: true, placeholder: "Last, First", class: "form-control" %>
 
     <%= form.label :email %>
     <%= form.email_field :email, id: :user_email, class: "form-control" %>
 
     <%= form.label :title %>
-    <%= form.text_field :title, id: :user_title, class: "form-control" %>
+    <%= form.text_field :title, id: :user_title, placeholder: "Mr., Mrs., Miss, Dr., etc.", class: "form-control" %>
 
     <%= form.label :phone %>
     <%= form.text_field :phone, id: :user_phone, class: "form-control" %>
