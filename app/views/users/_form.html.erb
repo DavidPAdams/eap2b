@@ -14,7 +14,7 @@
     <%= form.text_field :phone, id: :user_phone, class: "form-control" %>
 
     <%= form.label :status %>
-    <%= form.select :status, [['inactive', 0], ['active', 1]], id: :user_status %>
+    <%= form.select :status, [['inactive', 0], ['active', 1]], id: :user_status, class: "form-control" %>
 
     <%= form.submit yield(:button_text), class: "form-control btn btn-primary" %>
   </div>
