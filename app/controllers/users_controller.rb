@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
-  before_action :set_users, only: [:index]
+  before_action :set_users, only: [:index, :create, :update]
   helper_method :sort_column, :sort_direction
 
   def index
@@ -13,20 +13,31 @@ class UsersController < ApplicationController
 
   def create
     @user = User.create(user_params)
-    redirect_to root_url
+    if @user.save
+      flash[:success] = "User #{@user.name} was successfully added."
+      redirect_to root_url
+    else
+      render :new
+    end
   end
 
   def edit
+    puts @user.name
   end
 
   def update
-    @user.update(user_params)
-    set_users
-    redirect_to root_url
+    if @user.update(user_params)
+      flash[:success] = "User #{@user.name} was successfully updated."
+      redirect_to root_url
+    else
+      render :edit
+    end
   end
 
   def destroy
+    gone_user = @user
     @user.destroy
+    flash[:danger] = "User #{gone_user.name} was deleted."
     redirect_to root_url
   end
 
