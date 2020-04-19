@@ -8,7 +8,9 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= render 'form', user: @user %>
+        <%= form_with(model: @user, remote: true, method: "put") do |form| %>
+          <%= render 'form_fields', form: form %>
+        <% end %>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -16,3 +18,4 @@
     </div>
   </div>
 </div>
+
