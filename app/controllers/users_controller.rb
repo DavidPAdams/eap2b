@@ -8,21 +8,20 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
   end
 
   def create
     @user = User.create(user_params)
     if @user.save
-      flash[:success] = "User #{@user.name} was successfully added."
+      flash[:success] = "New User: #{@user.name} was successfully added."
       redirect_to root_url
     else
-      render :new
+      flash[:warning] = "New User was not added."
+      redirect_to root_url
     end
   end
 
   def edit
-    puts @user.name
   end
 
   def update
