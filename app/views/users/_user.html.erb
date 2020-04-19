@@ -23,7 +23,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= form_with(model: user, remote: true) do |form| %>
+        <%= form_with(model: user, remote: true, method: "patch") do |form| %>
           <%= render 'form_fields', form: form %>
         <% end %>
       </div>
@@ -33,4 +33,3 @@
     </div>
   </div>
 </div>
-
