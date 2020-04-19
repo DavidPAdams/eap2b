@@ -2,7 +2,7 @@
 <a href='/users/new' data-toggle="modal" data-target="#newUserModal" class="btn btn-primary btn-sm">Add New User</a>
 <table class="table-striped">
   <thead>
-    <tr>
+    <tr id="users">
       <th><%= sortable "updated_at", "Last Updated" %></th>
       <th><%= sortable "name" %></th>
       <th><%= sortable "email" %></th>
