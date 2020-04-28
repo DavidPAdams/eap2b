@@ -5,31 +5,12 @@
   <td><%= user.title %></td>
   <td><%= user.phone %></td>
   <td class="status_<%= user.status %>"><%= user.status ? 'active' : 'inactive' %></td>
-  <td>
-    <a href='/users/<%= user.id %>/edit' data-toggle="modal" data-target="#editUserModal_<%= user.id %>" class="btn btn-success btn-sm">Edit</a>
+  <td><%= link_to "Edit", edit_user_path(user), remote: true, class: "btn btn-success btn-sm" %>
+    <!-- <a href='/users/<%= user.id %>/edit' data-toggle="modal" data-target="#editUserModal_<%= user.id %>" class="btn btn-success btn-sm">Edit</a> -->
   </td>
   <td>
-    <%= link_to "Delete", user_path(user), { method: :delete, remote: true, data: { confirm: 'Confirm delete' }, class: "btn btn-danger btn-sm" } %>
+    <%= link_to "Delete", user_path(user), { method: :delete, data: { confirm: 'Confirm delete' }, class: "btn btn-danger btn-sm" } %>
   </td>
 </tr>
 
-<div class="modal fade" id='editUserModal_<%= user.id %>' tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id='editUserModal_<%= user.id %>_Label'>Edit User</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <%= form_with(model: user, remote: true, method: "patch") do |form| %>
-          <%= render 'form_fields', form: form %>
-        <% end %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+
