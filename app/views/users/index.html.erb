@@ -1,24 +1,37 @@
 <h1>Users</h1>
 <a href='/users/new' data-toggle="modal" data-target="#newUserModal" class="btn btn-primary btn-sm">Add New User</a>
-<table class="table-striped">
-  <thead>
-    <tr id="users">
-      <th><%= sortable "updated_at", "Last Updated" %></th>
-      <th><%= sortable "name" %></th>
-      <th><%= sortable "email" %></th>
-      <th><%= sortable "title" %></th>
-      <th><%= sortable "phone" %></th>
-      <th><%= sortable "status" %></th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
 
-  <tbody id="users">
-    <%= render @users %>
-  </tbody>
-</table>
+<div class="form-group">
+  <%= form_with(url: users_path, method: "get") do %>
+    <%= label_tag(:query, "Search by Name or Email:") %>
+    <%= text_field_tag :query %>
+    <%= submit_tag("Search", class: "btn btn-success btn-sm") %>
+  <% end %>
+</div>
 
-<%= will_paginate @users %>
+<div id="usersList">
+  <table class="table-striped">
+    <thead>
+      <tr>
+        <th><%= sortable "updated_at", "Last Updated" %></th>
+        <th><%= sortable "name" %></th>
+        <th><%= sortable "email" %></th>
+        <th><%= sortable "title" %></th>
+        <th><%= sortable "phone" %></th>
+        <th><%= sortable "status" %></th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+
+    <tbody id="users">
+      <%= render @users %>
+    </tbody>
+  </table>
+  <div id="paginationing">
+    <%= will_paginate @users %>
+  </div>
+
+</div>
 
 <div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="newUserModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -43,6 +56,5 @@
 
 
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel">
-  
 </div>
 
