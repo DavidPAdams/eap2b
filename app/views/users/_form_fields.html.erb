@@ -13,7 +13,7 @@
   <%= form.text_field :phone, class: "form-control" %>
 
   <%= form.label :status %>
-  <%= form.select :status, ([['inactive', 0], ['active', 1]]), class: "form-control" %>
+  <%= form.select :status, [['inactive', false], ['active', true]], class: "form-control" %>
 
   <%= form.submit "Enter", class: "form-control btn btn-primary" %>
 </div>
