@@ -1,10 +1,15 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
-  before_action :set_users, only: [:index, :create, :update]
+  before_action :set_users, only: [:create, :update]
   helper_method :sort_column, :sort_direction
 
   def index
     @user = User.new 
+    if params[:query].present?
+      @users = User.where("name LIKE ? or email LIKE ?", "%#{params[:query]}%", "%#{params[:query]}%").paginate(page: params[:page])
+    else
+      set_users
+    end
   end
 
   def new
@@ -16,7 +21,7 @@ class UsersController < ApplicationController
       flash[:success] = "New User: #{@user.name} was successfully added."
       redirect_to root_url
     else
-      flash[:warning] = "New User was not added."
+      flash[:danger] = "Name/Email missing or Email already used. New User was not added."
       redirect_to root_url
     end
   end
@@ -52,7 +57,7 @@ class UsersController < ApplicationController
     end
 
     def set_users
-      @users = User.order(sort_column + " " + sort_direction).paginate(page: params[:page])
+      @users = User.order("#{sort_column} #{sort_direction}").paginate(page: params[:page])
     end
 
     def sort_column
