@@ -19,10 +19,10 @@ class UsersController < ApplicationController
     @user = User.create(user_params)
     if @user.save
       flash[:success] = "New User: #{@user.name} was successfully added."
-      redirect_to root_url
+      redirect_back fallback_location: root_url
     else
       flash[:danger] = "Name/Email missing or Email already used. New User was not added."
-      redirect_to root_url
+      redirect_back fallback_location: root_url
     end
   end
 
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)
       flash[:success] = "User #{@user.name} was successfully updated."
-      redirect_to root_url
+      redirect_back fallback_location: root_url
     else
       render :edit
     end
@@ -43,7 +43,7 @@ class UsersController < ApplicationController
     gone_user = @user
     @user.destroy
     flash[:danger] = "User #{gone_user.name} was deleted."
-    redirect_to root_url
+    redirect_back fallback_location: root_url
   end
 
   private
