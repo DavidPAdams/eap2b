@@ -1,0 +1,11 @@
+.modal-dialog{:role => "document"}
+  .modal-content
+    .modal-header
+      %h5.modal-title{:id => "editUserModal_#{@user.id}_Label"} Edit User
+      %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+        %span{"aria-hidden" => "true"} ×
+    .modal-body
+      = form_with(model: @user, remote: true, method: "put") do |form|
+        = render 'form_fields', form: form
+    .modal-footer
+      %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Close

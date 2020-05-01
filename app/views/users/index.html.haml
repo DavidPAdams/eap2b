@@ -1,0 +1,22 @@
+%h1= link_to "Users", users_path
+%a.btn.btn-primary.btn-sm{"data-target" => "#newUserModal", "data-toggle" => "modal", :href => "/users/new"} Add New User
+.form-group
+  = form_with(url: users_path, method: "get") do
+    = label_tag :query, "Filter by Name / Email:"
+    = text_field_tag :query, params[:query]
+    = submit_tag "Search", class: "btn btn-success btn-sm"
+#usersList
+  = render 'userList'
+#newUserModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "newUserModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %h5#newUserModalLabel.modal-title Add New User
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body
+        = form_with(model: @user, remote: true) do |form|
+          = render 'form_fields', form: form
+      .modal-footer
+        %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Close
+#editModal.modal.fade{"aria-labelledby" => "editUserModalLabel", :role => "dialog", :tabindex => "-1"}
